@@ -1,5 +1,8 @@
+import time
 from pathlib import Path
 import json
+import generators
+
 
 from generators import dna_sequence
 
@@ -64,12 +67,30 @@ def binary_search(data, number):
             right = mid - 1
     return None
 
-def main(file_name, field, number):
+def main(file_name, field, number, searching):
     data = read_data(file_name, field)
-    search = linear_search(data, number)
-    b_search = binary_search(data, number)
-    return b_search
+    if searching == "linear":
+        search = linear_search(data, number)
+    if searching == "binary":
+        search = binary_search(data, number)
+    return search
 
 
 if __name__ == "__main__":
-    print(main("sequential.json", "ordered_numbers", 14))
+    sizes = [100, 500, 1000, 5000, 10000]
+    linear_times = []
+    binary_times = []
+    for size in sizes:
+        start = time.perf_counter()
+        linear_search(size, 8)
+        end = time.perf_counter()
+        duration = end - start
+    if searching == "linear":
+        linear_times.append(duration)
+    if searching == "binary":
+        binary_times.append(duration)
+    print(main("sequential.json", "ordered_numbers", 14, "binary"))
+    start = time.perf_counter()
+    end = time.perf_counter()
+    duration = end - start
+    print(f"Měření trvalo: {duration:.8f} s")
