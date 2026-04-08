@@ -38,9 +38,38 @@ def read_data(file_name, field):
         else:
             return None
 
-def main(file_name, field):
-    return read_data(file_name, field)
+def linear_search(data, number):
+    slovnik = {}
+    positions = []
+    i = 0
+    count = 0
+    for value in data:
+        if data[i] == number:
+            count += 1
+            positions.append(i)
+        i += 1
+    result = {"positions": positions, "count": count}
+    return result
+
+def binary_search(data, number):
+    left = 0
+    right = len(data) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        if data[mid] == number:
+            return mid
+        if data[mid] < number:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return None
+
+def main(file_name, field, number):
+    data = read_data(file_name, field)
+    search = linear_search(data, number)
+    b_search = binary_search(data, number)
+    return b_search
 
 
 if __name__ == "__main__":
-    print(main("sequential.json", "dna_sequence"))
+    print(main("sequential.json", "ordered_numbers", 14))
