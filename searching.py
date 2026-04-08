@@ -1,6 +1,8 @@
 from pathlib import Path
 import json
 
+from generators import dna_sequence
+
 
 def read_data(file_name, field):
     """
@@ -21,11 +23,24 @@ def read_data(file_name, field):
     cwd_path = Path.cwd()
     
     file_path = cwd_path / file_name
+    with open(file_name, "r", encoding="utf-8") as f:
+        data = json.load(f)
 
+        if field == "unordered_numbers":
+            result = data[field]
+            return result
+        if field == "ordered_numbers":
+            result = data[field]
+            return result
+        if field == "dna_sequence":
+            result = data[field]
+            return str(result)
+        else:
+            return None
 
-def main():
-    pass
+def main(file_name, field):
+    return read_data(file_name, field)
 
 
 if __name__ == "__main__":
-    main()
+    print(main("sequential.json", "dna_sequence"))
